@@ -1,6 +1,5 @@
 import express from 'express'
 import jsend from './middlewares/jsend'
-// import logger from './utils/logger'
 import routes from './routes'
 
 const app = express()

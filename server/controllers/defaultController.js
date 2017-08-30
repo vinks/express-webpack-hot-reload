@@ -1,9 +1,7 @@
-async function foo() {
-  return 'async working!'
-}
+import defaultService from '../services/defaultService'
 
 const index = async(req, res) => {
-  const data = await foo()
+  const data = await defaultService.foo()
 
   res.success({
     data,

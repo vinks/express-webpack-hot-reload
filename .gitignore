@@ -59,3 +59,9 @@ typings/
 
 # Build folder
 .build
+
+# WebStorm IDE
+.idea/
+
+# VSCode folder
+.vscode/
