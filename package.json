@@ -28,6 +28,8 @@
     "express": "^4.14.1",
     "express-status-monitor": "^1.0.0",
     "http-auth": "^3.2.3",
+    "ouch": "^1.0.0",
+    "parsetrace": "^0.2.0",
     "winston": "^2.3.1"
   }
 }
