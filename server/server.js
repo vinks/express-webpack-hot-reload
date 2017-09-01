@@ -1,12 +1,14 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import Ouch from 'ouch'
-import parsetrace from 'parsetrace'
-import auth from 'http-auth'
-const statusMonitor = require('express-status-monitor')()
+import compression from 'compression'
+import hpp from 'hpp'
 
 // Middlewares
-import jsend from './middlewares/jsend'
+import {
+  jsend,
+  notFoundMiddleware,
+  errorHandlerMiddleware
+} from './middlewares'
 
 // Routes
 import routes from './routes'
@@ -14,42 +16,30 @@ import routes from './routes'
 // Express application
 const app = express()
 
-// Enable parsing request body
+// Enable body parsing middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// Don't expose any software information to hackers.
+app.disable('x-powered-by')
+
+// Response compression.
+app.use(compression({ level: 9 }))
+
+// Prevent HTTP Parameter pollution.
+app.use(hpp())
 
 // Use jsend in api responses
 // https://labs.omniti.com/labs/jsend
 app.use(jsend())
 
-const basic = auth.basic({
-  realm: 'Monitor Area'
-}, (user, pass, callback) =>
-  callback(user === 'username' && pass === 'password')
-)
-
-app.use(statusMonitor)
-app.get('/status', auth.connect(basic), statusMonitor.pageRoute)
-
 // Use routes
 app.use('/', routes)
 
-// Handle errors
-app.use((err, req, res, next) => {
-  const contype = req.headers['content-type']
+// 404 Handler for api routes
+app.use(notFoundMiddleware)
 
-  if (!contype || contype.indexOf('application/json') !== 0) {
-    (new Ouch()).pushHandler(
-      new Ouch.handlers.PrettyPageHandler()
-    ).handleException(err, req, res, () => {
-      next()
-    })
-  } else {
-    res.error({
-      message: err.message,
-      trace: parsetrace(err, { sources: false }).object()
-    }, 500)
-  }
-})
+// Error Handler
+app.use(errorHandlerMiddleware)
 
 export default app

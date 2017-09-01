@@ -1,5 +1,5 @@
 async function foo() {
-  return 'async working!'
+  return 'async working'
 }
 
 export default { foo }

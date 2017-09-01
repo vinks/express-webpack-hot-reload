@@ -4,7 +4,6 @@ const nodeExternals = require('webpack-node-externals')
 const StartServerPlugin = require('start-server-webpack-plugin')
 
 module.exports = {
-  devtool: 'sourcemap',
   entry: ['webpack/hot/poll?1000', 'babel-polyfill', './server/index'],
   watch: true,
   target: 'node',
@@ -36,11 +35,6 @@ module.exports = {
       'process.env': {
         BUILD_TARGET: JSON.stringify('server')
       }
-    }),
-    new webpack.BannerPlugin({
-      banner: 'require("source-map-support").install();',
-      raw: true,
-      entryOnly: false
     })
   ],
   output: {

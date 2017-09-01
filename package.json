@@ -16,7 +16,6 @@
     "babel-preset-react": "^6.24.1",
     "eslint": "^4.5.0",
     "eslint-plugin-react": "^7.3.0",
-    "pretty-error": "^2.1.1",
     "source-map-support": "^0.4.16",
     "start-server-webpack-plugin": "^2.1.2",
     "webpack": "^2.2.1",
@@ -25,11 +24,9 @@
   },
   "dependencies": {
     "body-parser": "^1.17.2",
+    "compression": "^1.7.0",
     "express": "^4.14.1",
-    "express-status-monitor": "^1.0.0",
-    "http-auth": "^3.2.3",
-    "ouch": "^1.0.0",
-    "parsetrace": "^0.2.0",
+    "hpp": "^0.2.2",
     "winston": "^2.3.1"
   }
 }
